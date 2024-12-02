@@ -1,0 +1,27 @@
+import requests
+
+def highest_superhero_by_gender_and_job(gender, has_job):
+    url = "https://akabab.github.io/superhero-api/"
+    response = requests.get(url)
+    superheroes = response.json()
+
+    filtered_heroes = [
+        hero in superheroes
+        if (hero['gender'] == gender)
+        if (hero['work']['occupation'] not None)
+
+    if not filtered_heroes:
+        return None
+
+    highest_hero = max(filtered_heroes, key = hero['power']['intelligence'])
+    return highest_hero
+
+# Тесты
+def test_highest_superhero_by_gender_and_job():
+    assert highest_superhero_by_gender_and_job("male", "True") is not None
+    assert highest_superhero_by_gender_and_job("female", "False") is not None
+    assert highest_superhero_by_gender_and_job("non-binary", "True") is None
+    assert highest_superhero_by_gender_and_job("male", "False") is None
+    assert highest_superhero_by_gender_and_job("female", "True") is None
+    assert highest_superhero_by_gender_and_job("any", "True") is not None
+    assert highest_superhero_by_gender_and_job("any", "False") not None
